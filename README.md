@@ -1,3 +1,12 @@
+---
+title: E-commerce Fulfillment Environment
+emoji: 🏭
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+pinned: false
+---
+
 # E-commerce Fulfillment Environment
 
 A real-world OpenEnv environment where AI agents learn to manage order processing, inventory management, and customer service tasks in an e-commerce fulfillment center.
