@@ -39,14 +39,28 @@ def main():
     
     log_start(task=TASK_NAME, env=BENCHMARK, model=MODEL_NAME)
     
-    system_prompt = "You are an AI order fulfillment agent. Analyze the text state provided and return a JSON with keys 'action' and 'target_id'."
+    system_prompt = (
+        "You are an AI order fulfillment agent. Analyze the provided state and return a JSON object with keys 'action' and 'target_id'.\n"
+        "The ONLY valid values for 'action' are: 'process_order', 'restock_item', 'handle_customer', 'process_return', 'expedite_order', 'quality_check', 'update_inventory', 'idle'.\n"
+        "The 'target_id' should be a product/order/inquiry ID if relevant, otherwise null."
+    )
     
     try:
         while not done:
             steps_taken += 1
             obs_dict = obs.to_dict()
             
-            prompt = f"Observation: orders={obs_dict['orders_pending']} low_stock={len(obs_dict['low_stock_items'])} returns={obs_dict['returns_pending']} queue={obs_dict['customer_queue']}"
+            prompt = (
+                f"Current State Check:\n"
+                f"- Orders Pending: {obs_dict['orders_pending']}\n"
+                f"- Low Stock Products: {obs_dict['low_stock_items']}\n" 
+                f"- Out of Stock Products: {obs_dict['out_of_stock_items']}\n"
+                f"- Return Requests: {obs_dict['returns_pending']}\n"
+                f"- Customer Inquiries: {obs_dict['customer_queue']}\n"
+                f"- Urgent Inquiries: {obs_dict['urgent_inquiries']}\n"
+                f"- Active Alerts: {obs_dict['alerts']}\n"
+                "What is your next action?"
+            )
             action_chosen = None
             error_msg = None
             
