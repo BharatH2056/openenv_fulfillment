@@ -1,0 +1,29 @@
+# E-commerce Fulfillment Environment Dependencies
+# Core dependencies - minimal for portability
+
+# No external dependencies required for the core environment!
+# The environment uses only Python standard library:
+# - dataclasses (standard library)
+# - enum (standard library)
+# - random (standard library)
+# - uuid (standard library)
+# - typing (standard library)
+# - json (standard library)
+# - argparse (standard library)
+
+# Optional dependencies for enhanced features:
+# numpy>=1.24.0  # For vectorized operations
+# gymnasium>=0.28.0  # For RL compatibility
+
+# API & Web Interface requirements
+fastapi>=0.100.0
+uvicorn>=0.22.0
+pydantic>=2.0.0
+gradio>=3.40.0
+
+# Inference script requirements
+openai>=1.0.0
+# numpy>=1.24.0  # For vectorized operations
+
+# Gradio dependencies (for web interface):
+# gradio>=4.0.0

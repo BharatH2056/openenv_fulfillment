@@ -1,0 +1,2 @@
+# Gradio deployment requirements
+gradio>=4.0.0

@@ -1,0 +1,108 @@
+name: ecommerce-fulfillment
+version: 1.0.0
+description: |
+  A real-world e-commerce order fulfillment environment where AI agents learn
+  to manage order processing, inventory management, and customer service tasks.
+  Agents must efficiently process orders, manage stock levels, handle returns,
+  and respond to customer inquiries while optimizing for speed and accuracy.
+
+author: Hackathon Team
+license: MIT
+
+entry_point: env.environment:FulfillmentEnv
+
+tasks:
+  - id: task_easy
+    name: Simple Order Processing
+    description: |
+      Process incoming orders by picking items from inventory and preparing
+      them for shipment. The agent must select the correct items and quantities
+      to fulfill orders accurately.
+    difficulty: easy
+    max_steps: 50
+    pass_threshold: 0.7
+
+  - id: task_medium
+    name: Inventory Management
+    description: |
+      Manage inventory levels across multiple product categories while
+      processing orders. The agent must balance fulfilling orders with
+      maintaining adequate stock levels and reordering when necessary.
+    difficulty: medium
+    max_steps: 100
+    pass_threshold: 0.6
+
+  - id: task_hard
+    name: Full Operations Management
+    description: |
+      Handle complete e-commerce operations including order processing,
+      inventory management, customer service inquiries, and return processing.
+      The agent must optimize across multiple competing objectives.
+    difficulty: hard
+    max_steps: 200
+    pass_threshold: 0.5
+
+observation_space:
+  type: dict
+  properties:
+    orders_pending:
+      type: integer
+      description: Number of orders waiting to be processed
+    orders_completed:
+      type: integer
+      description: Number of orders successfully completed
+    inventory_levels:
+      type: array
+      description: Current stock levels for each product category
+    customer_queue:
+      type: integer
+      description: Number of customer inquiries waiting
+    returns_pending:
+      type: integer
+      description: Number of return requests to process
+    time_remaining:
+      type: integer
+      description: Steps remaining in the episode
+    alerts:
+      type: array
+      description: Active alerts (low stock, expedited orders, etc.)
+
+action_space:
+  type: discrete
+  actions:
+    - id: 0
+      name: process_order
+      description: Process the next pending order
+    - id: 1
+      name: restock_item
+      description: Restock a low-inventory item
+    - id: 2
+      name: handle_customer
+      description: Respond to a customer inquiry
+    - id: 3
+      name: process_return
+      description: Process a return request
+    - id: 4
+      name: expedite_order
+      description: Fast-track an urgent order
+    - id: 5
+      name: quality_check
+      description: Perform quality check on prepared orders
+    - id: 6
+      name: update_inventory
+      description: Update inventory records after audit
+    - id: 7
+      name: idle
+      description: Wait/skip this turn
+
+reward_structure:
+  order_completed: 1.0
+  order_failed: -0.5
+  customer_satisfied: 0.5
+  customer_escalated: -0.3
+  return_processed: 0.3
+  return_disputed: -0.4
+  low_stock_warning: -0.1
+  stockout: -1.0
+  efficient_operation: 0.1
+  time_penalty: -0.01
