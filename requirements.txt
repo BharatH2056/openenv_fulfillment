@@ -27,3 +27,4 @@ openai>=1.0.0
 
 # Gradio dependencies (for web interface):
 # gradio>=4.0.0
+openenv-core>=0.2.0
